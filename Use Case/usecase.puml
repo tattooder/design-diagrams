@@ -1,0 +1,61 @@
+@startuml UseCase
+
+left to right direction
+
+actor :Admin: as ac1
+actor :Mod: as ac2
+actor :User: as ac3
+actor :Artist: as ac4
+actor :Unregistered\nUser: as ac5
+
+package Backend {
+    rectangle Auth {
+        usecase "Create\nAdmin" as uc1
+        usecase "Create\nMod" as uc2
+        usecase "Create\nUser" as uc3
+        usecase "Create\nArtist" as uc4
+        usecase "Login" as uc5
+    }
+
+    rectangle App {
+        usecase "Add\nPrefrences" as uc6
+        usecase "Register\nLocation" as uc7
+        usecase "Get\nMatches" as uc8
+        usecase "Match" as uc9
+        usecase "Do not\nMatch" as uc10
+        usecase "Unmatch" as uc11
+    }
+} 
+
+package "Chat Server" {
+    usecase "Create Chat" as uc13
+    usecase "End Chat" as uc14
+    usecase "Send Message" as uc15
+    usecase "Recieve Message" as uc16
+    usecase "View Chat Logs" as uc17
+}
+
+ac1 -- uc1
+ac1 -- uc2
+ac1 -- uc3
+ac1 -- uc4
+ac1 -- uc5
+ac2 -- uc5
+ac2 -- uc11
+ac2 -- uc17
+ac3 .> ac4 : extends
+uc3 --- ac3 
+uc5 --- ac3
+uc6 --- ac3
+uc7 --- ac3
+uc8 --- ac3
+uc9 --- ac3
+uc10 --- ac3
+uc11 --- ac3
+uc15 --- ac3
+uc16 --- ac3
+ac5 -- uc3
+uc9 --> uc13
+uc11 --> uc14
+
+@enduml
