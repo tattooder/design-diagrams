@@ -24,6 +24,7 @@ package Backend {
         usecase "Match" as uc9
         usecase "Do not\nMatch" as uc10
         usecase "Unmatch" as uc11
+        usecase "Add\nSameples" as uc12
     }
 } 
 
@@ -54,6 +55,7 @@ uc10 --- ac3
 uc11 --- ac3
 uc15 --- ac3
 uc16 --- ac3
+uc12 ---ac4
 ac5 -- uc3
 uc9 --> uc13
 uc11 --> uc14
