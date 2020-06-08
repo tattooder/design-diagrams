@@ -1,0 +1,56 @@
+@startuml Block
+skinparam ComponentStyle uml2
+
+package "App" {
+    [Auth Manager] as c1
+    [Matching] as c2
+    [Chat] as c3
+
+    () "HTTPS" as https
+    () "Web\nSocket" as ws
+
+    c1 -down-> https
+    c2 -down-> https
+    c3 -down-> ws
+}
+
+cloud AWS?{
+    node "App Server"{
+        
+        [Matching] as c5
+        [Auth] as c4
+
+        () "HTTPS\nServer" as hss
+        
+        hss -down-> c4 : "Auth\nRequests"
+        hss -down-> c5 : "Matching\nRequests"
+    }
+
+    node "Chat Server"{
+        [Chat] as c6
+        () "Web Socket\nServer" as wss
+        () "HTTPS" as https2
+
+        wss -down-> c6
+        c6 -l-> https2 : Auth
+    }
+
+    database "Mongo DB" {
+        [Roles] as r
+        [Users] as u
+        [Matches] as m
+        [Chat\nHistory] as ch
+
+        u -down-> r
+    }
+
+    c6 -down-> ch
+    c5 -down-> m
+    c4 -down-> u
+}
+
+https -down-> hss
+https2 -left-> hss
+ws -down-> wss
+
+@enduml
